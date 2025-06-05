@@ -1,0 +1,199 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateEventInput {
+  city: String!
+  country: String!
+  date: Date!
+  name: String!
+  venue: String!
+}
+
+input CreateFightInput {
+  eventId: ID!
+  fighter1Id: ID!
+  fighter2Id: ID!
+  rounds: Int!
+  weightClass: WeightClass!
+}
+
+input CreateFighterInput {
+  dateOfBirth: Date!
+  firstName: String!
+  height: Float!
+  lastName: String!
+  nickname: String
+  reach: Float
+  stance: String
+  weight: Float!
+  weightClass: WeightClass!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Event {
+  city: String!
+  country: String!
+  createdAt: Date!
+  date: Date!
+  fights: [Fight!]!
+  id: ID!
+  name: String!
+  updatedAt: Date!
+  venue: String!
+}
+
+type Fight {
+  createdAt: Date!
+  event: Event!
+  fighter1: Fighter!
+  fighter2: Fighter!
+  finishRound: Int
+  finishTime: Int
+  finishType: FinishType
+  id: ID!
+  notes: String
+  result: FightResult
+  rounds: Int!
+  updatedAt: Date!
+  weightClass: WeightClass!
+  winner: Fighter
+}
+
+"""Available fight results for fighters"""
+enum FightResult {
+  DRAW
+  LOSS
+  NO_CONTEST
+  WIN
+}
+
+type Fighter {
+  createdAt: Date!
+  currentRanking: Ranking
+  dateOfBirth: Date!
+  fights: [Fight!]!
+  firstName: String!
+  height: Float!
+  id: ID!
+  lastName: String!
+  nickname: String
+  reach: Float
+  record: FighterRecord!
+  stance: String
+  updatedAt: Date!
+  weight: Float!
+  weightClass: WeightClass!
+}
+
+type FighterRecord {
+  draws: Int!
+  fighter: Fighter!
+  id: ID!
+  knockouts: Int!
+  losses: Int!
+  noContests: Int!
+  submissions: Int!
+  wins: Int!
+}
+
+"""Available finish types for fighters"""
+enum FinishType {
+  DECISION
+  DISQUALIFICATION
+  KNOCKOUT
+  SUBMISSION
+  TECHNICAL_KNOCKOUT
+}
+
+"""JSON custom scalar type"""
+scalar JSON
+
+type Mutation {
+  createEvent(input: CreateEventInput!): Event!
+  createFight(input: CreateFightInput!): Fight!
+  createFighter(input: CreateFighterInput!): Fighter!
+  deleteEvent(id: ID!): Boolean!
+  deleteFight(id: ID!): Boolean!
+  deleteFighter(id: ID!): Boolean!
+  updateEvent(id: ID!, input: UpdateEventInput!): Event!
+  updateFightResult(id: ID!, input: UpdateFightResultInput!): Fight!
+  updateFighter(id: ID!, input: UpdateFighterInput!): Fighter!
+}
+
+type Query {
+  event(id: ID!): Event!
+  eventFightCard(eventId: ID!): [Fight!]!
+  events(upcoming: Boolean): [Event!]!
+  fight(id: ID!): Fight!
+  fighter(id: ID!): Fighter!
+  fighterRankings(weightClass: WeightClass!): [Ranking!]!
+  fighterStats(id: ID!): FighterRecord!
+  fighters(weightClass: WeightClass): [Fighter!]!
+  fights(weightClass: WeightClass): [Fight!]!
+  rankings(search: RankingSearchInput): [Ranking!]!
+}
+
+type Ranking {
+  createdAt: Date!
+  fighter: Fighter!
+  id: ID!
+  points: Float!
+  position: Int!
+  updatedAt: Date!
+  weightClass: WeightClass!
+}
+
+input RankingSearchInput {
+  fromDate: Date
+  minPoints: Float
+  position: Int
+  toDate: Date
+  weightClass: WeightClass
+}
+
+type Subscription {
+  fightResultUpdated(fightId: ID!): Fight!
+  rankingsUpdated(weightClass: WeightClass!): [Ranking!]!
+}
+
+input UpdateEventInput {
+  city: String
+  country: String
+  date: Date
+  name: String
+  venue: String
+}
+
+input UpdateFightResultInput {
+  finishRound: Int
+  finishTime: Int
+  finishType: FinishType
+  notes: String
+  result: FightResult!
+  winnerId: ID
+}
+
+input UpdateFighterInput {
+  firstName: String
+  height: Float
+  lastName: String
+  nickname: String
+  reach: Float
+  stance: String
+  weight: Float
+  weightClass: WeightClass
+}
+
+"""Available weight classes for fighters"""
+enum WeightClass {
+  FEATHERWEIGHT
+  FLYWEIGHT
+  HEAVYWEIGHT
+  LIGHTWEIGHT
+  LIGHT_HEAVYWEIGHT
+  MIDDLEWEIGHT
+  WELTERWEIGHT
+}
