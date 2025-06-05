@@ -1,0 +1,72 @@
+@startuml ERD
+
+entity Fighter {
+  * id: uuid
+  * firstName: varchar
+  * lastName: varchar
+  nickname: varchar
+  * dateOfBirth: date
+  * height: float
+  * weight: float
+  reach: float
+  stance: varchar
+  * weightClass: enum
+  * createdAt: timestamp
+  * updatedAt: timestamp
+}
+
+entity FighterRecord {
+  * id: uuid
+  * fighterId: uuid
+  * wins: int
+  * losses: int
+  * draws: int
+  * noContests: int
+  * knockouts: int
+  * submissions: int
+}
+
+entity Event {
+  * id: uuid
+  * name: varchar
+  * date: timestamp
+  * venue: varchar
+  * city: varchar
+  * country: varchar
+  * createdAt: timestamp
+  * updatedAt: timestamp
+}
+
+entity Fight {
+  * id: uuid
+  * eventId: uuid
+  * fighter1Id: uuid
+  * fighter2Id: uuid
+  * winnerId: uuid
+  * weightClass: enum
+  * rounds: int
+  result: enum
+  finishType: enum
+  finishTime: int
+  finishRound: int
+  notes: text
+  * createdAt: timestamp
+  * updatedAt: timestamp
+}
+
+entity Ranking {
+  * id: uuid
+  * fighterId: uuid
+  * weightClass: enum
+  * position: int
+  * points: float
+  * createdAt: timestamp
+  * updatedAt: timestamp
+}
+
+Fighter ||--o{ Fight
+Fighter ||--|| FighterRecord
+Fighter ||--o| Ranking
+Event ||--o{ Fight
+
+@enduml
