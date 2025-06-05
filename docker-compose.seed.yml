@@ -4,7 +4,7 @@ services:
   seeder:
     build:
       context: .
-      dockerfile: Dockerfile.seed
+      dockerfile: Dockerfile.seeder
     environment:
       - NODE_ENV=development
       - DB_HOST=postgres
