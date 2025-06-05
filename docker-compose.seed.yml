@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  seeder:
+    build:
+      context: .
+      dockerfile: Dockerfile.seed
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - DB_DATABASE=test
